@@ -16,17 +16,48 @@ from TTS.api import TTS
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Initialize TTS
-tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
+# =================================================================================================
+# CHOOSE YOUR MODEL:
+# To generate speech, you need to select a model. Below are some recommended models.
+# You can uncomment the model you want to use.
+# =================================================================================================
 
-# Input text
-text = "hi guys  this is  hayden finally i have created text to voice program using machine learning and artificial inteligence"
+# Option 1: High-quality multilingual voice cloning (recommended for quality)
+# This model is great for cloning voices in different languages. It's a bit slower but offers excellent results.
+tts = TTS(model_name="tts_models/multilingual/multi-dataset/your_tts", progress_bar=True).to(device)
 
-# Specify the path to the speaker's waveform
-speaker_wav_path = "/content/drive/MyDrive/audio.wav"
+# Option 2: Faster English-only model
+# If you only need English and want faster generation, this model is a good choice.
+# tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC", progress_bar=True).to(device)
 
-# Specify the language
+# Option 3: Fairseq model for a wide range of languages
+# These models support over 1100 languages but may be slower.
+# Replace <lang-iso_code> with the desired language code (e.g., "deu" for German).
+# tts = TTS(model_name="tts_models/<lang-iso_code>/fairseq/vits", progress_bar=True).to(device)
+
+# =================================================================================================
+# INPUT YOUR TEXT:
+# Enter the text you want to convert to speech in the `text` variable.
+# =================================================================================================
+text = "Hello, world! This is a test of the new and improved SpeechStylis AI."
+
+# =================================================================================================
+# SPECIFY SPEAKER'S VOICE:
+# To clone a voice, provide a path to a high-quality audio file of the speaker.
+# The audio should be clear, without background noise.
+# =================================================================================================
+speaker_wav_path = "my/cloning/audio.wav"
+
+# =================================================================================================
+# CHOOSE LANGUAGE:
+# Specify the language of the text. For multilingual models, this is crucial.
+# =================================================================================================
 language = "en"
 
+# =================================================================================================
+# GENERATE AND SAVE SPEECH:
+# The following code will generate the speech and save it to a file.
+# =================================================================================================
 # Run TTS
 wav = tts.tts(text=text, speaker_wav=speaker_wav_path, language=language)
 

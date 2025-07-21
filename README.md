@@ -89,9 +89,25 @@ To use your prerecorded audio, locate the `.py` file and find the section where 
 speaker_wav_path = "/content/drive/MyDrive/audio.wav"
 ```
 
-## run in google collab
+## Run in Google Colab
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Xdzm-Cu1ofbyFv0xp7An-BNiXYYpTchV?usp=sharing)
+You can run SpeechStylis AI in Google Colab, which provides a free and convenient environment for running the notebook. Click the badge below to open the `SpeechStylis.ipynb` notebook in Colab:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/haydenbanz/SpeechStylis/blob/main/SpeechStylis.ipynb)
+
+## Best Practices for Voice Cloning
+
+To achieve the best results with voice cloning, it's important to use high-quality audio samples. The quality of the input audio directly affects the quality of the generated speech. Here are some tips for creating effective audio samples:
+
+*   **Use a High-Quality Microphone:** A good microphone will capture your voice with clarity and detail, which is crucial for the model to learn the nuances of your voice. Avoid using built-in laptop microphones if possible.
+
+*   **Record in a Quiet Environment:** Background noise can interfere with the voice cloning process. Record in a quiet room with minimal echo or reverberation.
+
+*   **Speak Naturally:** Speak in a natural and consistent tone. Avoid whispering or shouting. The model will learn from your speaking style, so be sure to provide a good example.
+
+*   **Provide Sufficient Audio:** The more audio you provide, the better the model will be at cloning your voice. Aim for at least 30 seconds of clear, continuous speech.
+
+*   **Use a Variety of Sentences:** Reading a variety of sentences will help the model learn the different sounds and intonations of your voice.
 
 
 

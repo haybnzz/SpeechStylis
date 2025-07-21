@@ -89,9 +89,25 @@ To use your prerecorded audio, locate the `.py` file and find the section where 
 speaker_wav_path = "/content/drive/MyDrive/audio.wav"
 ```
 
-## run in google collab
+## Run in Google Colab
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Xdzm-Cu1ofbyFv0xp7An-BNiXYYpTchV?usp=sharing)
+You can run SpeechStylis AI in Google Colab, which provides a free and convenient environment for running the notebook. Click the badge below to open the `SpeechStylis.ipynb` notebook in Colab:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/haydenbanz/SpeechStylis/blob/main/SpeechStylis.ipynb)
+
+## Best Practices for Voice Cloning
+
+To achieve the best results with voice cloning, it's important to use high-quality audio samples. The quality of the input audio directly affects the quality of the generated speech. Here are some tips for creating effective audio samples:
+
+*   **Use a High-Quality Microphone:** A good microphone will capture your voice with clarity and detail, which is crucial for the model to learn the nuances of your voice. Avoid using built-in laptop microphones if possible.
+
+*   **Record in a Quiet Environment:** Background noise can interfere with the voice cloning process. Record in a quiet room with minimal echo or reverberation.
+
+*   **Speak Naturally:** Speak in a natural and consistent tone. Avoid whispering or shouting. The model will learn from your speaking style, so be sure to provide a good example.
+
+*   **Provide Sufficient Audio:** The more audio you provide, the better the model will be at cloning your voice. Aim for at least 30 seconds of clear, continuous speech.
+
+*   **Use a Variety of Sentences:** Reading a variety of sentences will help the model learn the different sounds and intonations of your voice.
 
 
 
@@ -100,7 +116,30 @@ speaker_wav_path = "/content/drive/MyDrive/audio.wav"
 
 
 
-#### Running a multi-speaker and multi-lingual model
+### Choosing a Model
+
+SpeechStylis AI supports a variety of text-to-speech models, each with its own strengths. Choosing the right model depends on your specific needs for quality, speed, and language support.
+
+Here are some recommended models:
+
+*   **High-Quality Multilingual Voice Cloning (Recommended for Quality):**
+    *   **Model:** `tts_models/multilingual/multi-dataset/your_tts`
+    *   **Description:** This model is excellent for cloning voices in different languages. It's a bit slower but offers outstanding results.
+    *   **Use Case:** Ideal for applications where voice quality and naturalness are top priorities.
+
+*   **Faster English-Only Model:**
+    *   **Model:** `tts_models/en/ljspeech/tacotron2-DDC`
+    *   **Description:** If you only need English and want faster generation, this model is a good choice.
+    *   **Use Case:** Suitable for applications where speed is more important than multilingual support.
+
+*   **Fairseq Models for a Wide Range of Languages:**
+    *   **Model:** `tts_models/<lang-iso_code>/fairseq/vits`
+    *   **Description:** These models support over 1100 languages but may be slower. Replace `<lang-iso_code>` with the desired language code (e.g., "deu" for German).
+    *   **Use Case:** Perfect for projects that require broad language support.
+
+### Example Usage
+
+To use a specific model, you can modify the `SpeechStylis.py` file. Here's an example of how to use the `your_tts` model for high-quality voice cloning:
 
 ```python
 import torch
@@ -109,18 +148,23 @@ from TTS.api import TTS
 # Get device
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-# List available 
-print(TTS().list_models())
+# Initialize TTS with the desired model
+tts = TTS(model_name="tts_models/multilingual/multi-dataset/your_tts", progress_bar=True).to(device)
 
-# Init TTS
-tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
+# Text to be converted to speech
+text = "Hello, world! This is a test of the new and improved SpeechStylis AI."
 
-# Run TTS
-# ❗ Since this model is multi-lingual voice cloning model, we must set the target speaker_wav and language
-# Text to speech list of amplitude values as output
-wav = tts.tts(text="Hello world!", speaker_wav="my/cloning/audio.wav", language="en")
-# Text to speech to a file
-tts.tts_to_file(text="Hello world!", speaker_wav="my/cloning/audio.wav", language="en", file_path="output.wav")
+# Path to a high-quality audio file of the speaker's voice
+speaker_wav_path = "my/cloning/audio.wav"
+
+# Language of the text
+language = "en"
+
+# Generate speech and save it to a file
+output_file_path = "output.wav"
+tts.tts_to_file(text=text, speaker_wav=speaker_wav_path, language=language, file_path=output_file_path)
+
+print(f"Text-to-speech completed. Audio saved to: {output_file_path}")
 ```
 
 #### Running a single speaker model
